@@ -3,8 +3,10 @@ import { AnalysisResult, ShelfScanResult, BeautyAnalysisResult, NaturalRemedyRes
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
+const DEFAULT_MODEL = "gemini-3.8-flash";
+
 export async function analyzeNaturalRemedy(skinImageBase64: string, language?: string): Promise<NaturalRemedyResult> {
-  const model = "gemini-3-flash-preview";
+  const model = DEFAULT_MODEL;
   
   const systemInstruction = `You are the 'Dermalyze natural remedian' and a Multilingual & Cultural Expert.
   
@@ -80,7 +82,7 @@ export async function analyzeNaturalRemedy(skinImageBase64: string, language?: s
 }
 
 export async function analyzeBeauty(shelfImageBase64: string, skinImageBase64: string, language?: string): Promise<BeautyAnalysisResult> {
-  const model = "gemini-3-flash-preview";
+  const model = DEFAULT_MODEL;
   
   const systemInstruction = `You are a Master Beauty Consultant VLM and a Multilingual Expert.
   
@@ -185,7 +187,7 @@ export async function analyzeBeauty(shelfImageBase64: string, skinImageBase64: s
 }
 
 export async function scanShelf(shelfImageBase64: string, skinImageBase64: string, language?: string): Promise<ShelfScanResult> {
-  const model = "gemini-3-flash-preview";
+  const model = DEFAULT_MODEL;
   
   const systemInstruction = `You are a 'Skincare Analysis' Expert, Dermatological VLM, and Multilingual Expert.
   
@@ -263,7 +265,7 @@ export async function scanShelf(shelfImageBase64: string, skinImageBase64: strin
 }
 
 export async function analyzeDermatology(skinImageBase64: string, productImageBase64: string, language?: string): Promise<AnalysisResult> {
-  const model = "gemini-3-flash-preview";
+  const model = DEFAULT_MODEL;
   
   const systemInstruction = `You are an expert Dermatological VLM and Multilingual Expert. Your goal is to help women stay safe from toxic cosmetics.
   
@@ -373,7 +375,7 @@ Tone: Be helpful, empathetic, and professional.
 Constraint: If a query is a serious medical emergency, advise the user to see a doctor. Do not give medical prescriptions.`;
 
   return ai.chats.create({
-    model: "gemini-3-flash-preview",
+    model: DEFAULT_MODEL,
     config: {
       systemInstruction,
     },

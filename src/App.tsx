@@ -702,6 +702,20 @@ export default function App() {
     return null;
   };
 
+  const getErrorMessage = (err: unknown, defaultMsg: string): string => {
+    const message = err instanceof Error ? err.message : String(err);
+    if (message.includes('403') || message.includes('PERMISSION_DENIED') || message.includes('denied access')) {
+      return 'API Error (403 Permission Denied): Your Gemini project has been denied access or the key is inactive. Please create a new API key in Google AI Studio.';
+    }
+    if (message.includes('API_KEY_INVALID') || message.includes('API key not valid') || message.includes('UNAUTHENTICATED')) {
+      return 'Invalid API Key: Please verify your Gemini API key.';
+    }
+    if (message.includes('RESOURCE_EXHAUSTED') || message.includes('quota')) {
+      return 'API Quota Exceeded: Your Gemini API rate limit has been reached.';
+    }
+    return defaultMsg;
+  };
+
   const handleAnalyze = async (sImg?: string, pImg?: string) => {
     const skin = sImg || skinImage;
     const product = pImg || productImage;
@@ -714,7 +728,7 @@ export default function App() {
       setResult(data);
     } catch (err) {
       console.error(err);
-      setError('Analysis failed. Please try again with clearer images.');
+      setError(getErrorMessage(err, 'Analysis failed. Please try again with clearer images.'));
     } finally {
       setIsAnalyzing(false);
     }
@@ -732,7 +746,7 @@ export default function App() {
       setShelfResult(data);
     } catch (err) {
       console.error(err);
-      setError('Shelf scan failed. Please try again with clearer images.');
+      setError(getErrorMessage(err, 'Shelf scan failed. Please try again with clearer images.'));
     } finally {
       setIsScanning(false);
     }
@@ -750,7 +764,7 @@ export default function App() {
       setBeautyResult(data);
     } catch (err) {
       console.error(err);
-      setError('Beauty scan failed. Please try again with clearer images.');
+      setError(getErrorMessage(err, 'Beauty scan failed. Please try again with clearer images.'));
     } finally {
       setIsBeautyScanning(false);
     }
@@ -767,7 +781,7 @@ export default function App() {
       setNaturalResult(data);
     } catch (err) {
       console.error(err);
-      setError('Natural remedy analysis failed. Please try again with a clearer image.');
+      setError(getErrorMessage(err, 'Natural remedy analysis failed. Please try again with a clearer image.'));
     } finally {
       setIsNaturalAnalyzing(false);
     }

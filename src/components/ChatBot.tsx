@@ -51,7 +51,16 @@ export const ChatBot: React.FC<ChatBotProps> = ({ language }) => {
       setMessages(prev => [...prev, { role: 'model', text: result.text || 'I am sorry, I could not process that.' }]);
     } catch (error) {
       console.error('Chat error:', error);
-      setMessages(prev => [...prev, { role: 'model', text: 'Sorry, I encountered an error. Please try again.' }]);
+      const errMsg = error instanceof Error ? error.message : String(error);
+      let reply = 'Sorry, I encountered an error. Please try again.';
+      if (errMsg.includes('403') || errMsg.includes('PERMISSION_DENIED') || errMsg.includes('denied access')) {
+        reply = 'Gemini API Error (403 Permission Denied): Your project has been denied access or the key is inactive. Please generate a new API key in Google AI Studio.';
+      } else if (errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('quota')) {
+        reply = 'API Quota Exceeded: The rate limit has been reached. Please try again shortly or use a key from a new project.';
+      } else if (errMsg.includes('API_KEY_INVALID') || errMsg.includes('UNAUTHENTICATED')) {
+        reply = 'Invalid API key. Please check your Gemini API key in Google AI Studio.';
+      }
+      setMessages(prev => [...prev, { role: 'model', text: reply }]);
     } finally {
       setIsLoading(false);
     }
