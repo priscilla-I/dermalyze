@@ -1,0 +1,7 @@
+{
+  "name": "Dermalyze 2.0",
+  "description": "Next-Gen AI Clinical Dermatology & Cosmetic Intelligence Studio. Real-time ingredient safety, comedogenic scores, Monk scale shade matching, AM/PM routine conflict engine, and natural DIY remedy lab.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
