@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar } from './components/common/Navbar';
-import { ApiKeyModal } from './components/common/ApiKeyModal';
 import { ShelfScanTab } from './components/tabs/ShelfScanTab';
 import { BeautyScanTab } from './components/tabs/BeautyScanTab';
 import { SingleAnalysisTab } from './components/tabs/SingleAnalysisTab';
@@ -13,13 +12,12 @@ import { Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
   const { activeTab, toastMessage, t } = useApp();
-  const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-zinc-900 flex flex-col selection:bg-rose-100 selection:text-rose-900">
       
       {/* Top Navbar */}
-      <Navbar onOpenApiKeyModal={() => setIsApiKeyModalOpen(true)} />
+      <Navbar />
 
       {/* Main Content Viewport */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -55,12 +53,6 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
-
-      {/* API Key & Model Settings Modal */}
-      <ApiKeyModal
-        isOpen={isApiKeyModalOpen}
-        onClose={() => setIsApiKeyModalOpen(false)}
-      />
 
     </div>
   );

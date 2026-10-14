@@ -12,9 +12,9 @@ const STORAGE_KEYS = {
 };
 
 const DEFAULT_PREFS: UserPreferences = {
-  apiKey: '',
+  apiKey: process.env.GEMINI_API_KEY || '',
   selectedModel: 'gemini-2.5-flash',
-  demoMode: true,
+  demoMode: !Boolean(process.env.GEMINI_API_KEY),
   language: 'en'
 };
 

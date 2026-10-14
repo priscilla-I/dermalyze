@@ -6,27 +6,19 @@ import {
   Scan, 
   Leaf, 
   MessageSquare, 
-  Key, 
-  Layers, 
   Globe, 
   Heart,
-  SlidersHorizontal,
-  Flame
+  SlidersHorizontal
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { AppTab, LanguageCode } from '../../types';
 
-interface NavbarProps {
-  onOpenApiKeyModal: () => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ onOpenApiKeyModal }) => {
+export const Navbar: React.FC = () => {
   const { 
     activeTab, 
     setActiveTab, 
     language, 
     setLanguage, 
-    preferences, 
     vanityItems, 
     t 
   } = useApp();
@@ -77,29 +69,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenApiKeyModal }) => {
                 </span>
               </div>
               <p className="hidden sm:block text-[10px] text-zinc-500 font-medium tracking-tight">
-                AI Clinical Dermatology Studio
+                Clinical Dermatology & Cosmetic Intelligence
               </p>
             </div>
           </div>
 
-          {/* Right Controls: Mode Badge, Language, API Settings */}
+          {/* Right Controls: Clean Language Selector */}
           <div className="flex items-center gap-2 sm:gap-3">
-            
-            {/* Demo / Live Status Pill */}
-            <button
-              onClick={onOpenApiKeyModal}
-              className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                preferences.demoMode
-                  ? 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
-                  : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
-              }`}
-              title="Click to configure Gemini API Key"
-            >
-              <span className={`w-2 h-2 rounded-full ${preferences.demoMode ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
-              <span>{preferences.demoMode ? t('demoModeBadge') : t('liveApiBadge')}</span>
-            </button>
-
-            {/* Language Selector */}
             <div className="relative flex items-center">
               <Globe className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 pointer-events-none" />
               <select
@@ -115,16 +91,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenApiKeyModal }) => {
                 ))}
               </select>
             </div>
-
-            {/* API Key Modal Button */}
-            <button
-              onClick={onOpenApiKeyModal}
-              className="p-2 sm:px-3 sm:py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium rounded-full shadow-sm flex items-center gap-1.5 transition-all active:scale-95"
-              title="API Key & Model Settings"
-            >
-              <Key className="w-3.5 h-3.5 text-rose-300" />
-              <span className="hidden md:inline">{t('apiKeyConfig')}</span>
-            </button>
           </div>
         </div>
 
